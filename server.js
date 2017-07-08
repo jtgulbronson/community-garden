@@ -28,17 +28,34 @@ wss.on('connection', function (ws) {
     console.log("User Connected");
 
     ws.on('message', function (m) {
-        var message = JSON.parse(m);
 
-        if (message.type == 'register') {
-            console.log(message);
+        var client_msg = JSON.parse(m);
+        var server_msg = {};
+
+        if (client_msg.type == 'register') {
 
             var time = new Date().toJSON();
 
+            server_msg.type = client_msg.type;
+            server_msg.msg = `${time}: Someone has logged on`;
+
+            console.log(client_msg);
+
             connections.forEach(function (connection, index) {
 
-                connection.send(`${time}: Someone has logged on`);
+                connection.send(JSON.stringify(server_msg));
                 console.log("Message Sent to Client");
+
+            });
+        } else if (client_msg.type == 'clicked') {
+
+            server_msg = client_msg;
+
+            connections.forEach(function (connection, index) {
+
+                connection.send(JSON.stringify(server_msg));
+                console.log("Message Sent to Client");
+                console.log(server_msg);
 
             });
         }
@@ -51,9 +68,14 @@ wss.on('connection', function (ws) {
 
         var time = new Date().toJSON();
 
+        var server_msg = {
+            type: 'logoff',
+            msg: `${time}: Someone has logged off`
+        }
+
         connections.forEach(function (connection, index) {
 
-            connection.send(`${time}: Someone has logged off`);
+            connection.send(JSON.stringify(server_msg));
             console.log("Message Sent to Client");
 
         });
