@@ -2,39 +2,65 @@ window.onload = function () {
 
     var host = location.origin.replace(/^http/, 'ws');
     var ws = new WebSocket(host);
-    var id;
+    // var id;
+
+    var user = new User();
+    $('.id').html(user.id);
+
+
 
     ws.onopen = function () {
 
-        id = Math.round(Math.random() * 10000);
-        $(".id").html(id);
+        console.log(user);
 
-        var register = {
-            type: 'register'
-        };
-        ws.send(JSON.stringify(register));
+        var msg = {
+            type: 'loadAll',
+            sendToAll: false,
+            user: user
+        }
+
+        ws.send(JSON.stringify(msg));
+
+        var msg = {
+            type: 'register',
+            sendToAll: true,
+            user: user
+        }
+
+        ws.send(JSON.stringify(msg));
     }
 
     ws.onmessage = function (e) {
-        console.log(e);
 
         var data = JSON.parse(e.data);
+        console.log(data);
 
-        if (data.type == "clicked") {
-            $('body').append("<p>ID #" + data.id + " clicked </p>");
-        } else {
-            $('body').append("<p>" + data.msg + "</p>");
-        }
+        user[data.type](data);
+
     }
 
-    $(document).mouseup(function () {
-        console.log("clicked");
-
-        var msg = {
-            type: 'clicked',
-            id: id
+    $(document).touchwipe(function () {
+        msg = {
+            sendToAll: true,
+            user: user
         };
+    });
 
-        ws.send(JSON.stringify(msg));
+    $(document).touchwipe({
+        wipeLeft: function () {
+            //alert("left");
+        },
+        wipeRight: function () {
+            //alert("right");
+        },
+        wipeUp: function () {
+            alert("water");
+        },
+        wipeDown: function () {
+            //alert("down");
+        },
+        min_move_x: 20,
+        min_move_y: 20,
+        preventDefaultEvents: true,
     });
 }

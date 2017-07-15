@@ -20,6 +20,7 @@ var wss = new WebSocketServer({
 console.log("WebSocket Server was created");
 
 var connections = [];
+var users = [];
 
 wss.on('connection', function (ws) {
 
@@ -29,53 +30,52 @@ wss.on('connection', function (ws) {
 
     ws.on('message', function (m) {
 
-        var client_msg = JSON.parse(m);
-        var server_msg = {};
+        var msg = JSON.parse(m);
+        console.log(msg);
 
-        if (client_msg.type == 'register') {
-
-            var time = new Date().toJSON();
-
-            server_msg.type = client_msg.type;
-            server_msg.msg = `${time}: Someone has logged on`;
-
-            console.log(client_msg);
-
-            connections.forEach(function (connection, index) {
-
-                connection.send(JSON.stringify(server_msg));
-                console.log("Message Sent to Client");
-
-            });
-        } else if (client_msg.type == 'clicked') {
-
-            server_msg = client_msg;
-
-            connections.forEach(function (connection, index) {
-
-                connection.send(JSON.stringify(server_msg));
-                console.log("Message Sent to Client");
-                console.log(server_msg);
-
-            });
+        if (msg.type == 'register') {
+            users.push(msg.user);
+            console.log(msg.user);
+        } else if (msg.type == 'loadAll') {
+            msg.users = users;
         }
+
+        if (msg.sendToAll) {
+            //send to all connections
+            users.forEach(function (user, index) {
+                if (user.id == msg.id && user != msg.user) {
+                    user[index] = msg.user;
+                }
+            });
+
+            connections.forEach(function (connection, index) {
+                connection.send(JSON.stringify(msg));
+                console.log("Message Sent to Client");
+            });
+        } else {
+            //send back to sender
+            ws.send(JSON.stringify(msg));
+        }
+
     });
 
     ws.on('close', function () {
-        connections.splice(connections.indexOf(ws), 1);
 
-        console.log("User Disconnected");
-
-        var time = new Date().toJSON();
-
-        var server_msg = {
+        var msg = {
             type: 'logoff',
-            msg: `${time}: Someone has logged off`
+            user: users[connections.indexOf(ws)]
         }
+
+        //Searching for the connections array for the current closing Socket
+        //Use that index to find the user in the users array
+        //This should be the same because they are both added in the same order
+
+        users.splice(connections.indexOf(ws), 1);
+        connections.splice(connections.indexOf(ws), 1);
 
         connections.forEach(function (connection, index) {
 
-            connection.send(JSON.stringify(server_msg));
+            connection.send(JSON.stringify(msg));
             console.log("Message Sent to Client");
 
         });
