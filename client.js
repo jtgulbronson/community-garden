@@ -39,7 +39,7 @@ window.onload = function () {
 
     }
     $(document).on('swipeup', function () {
-        console.log("swipeup..");
+        alert("swipeup..");
         msg = {
             sendToAll: true,
             user: user
