@@ -38,29 +38,30 @@ window.onload = function () {
         user[data.type](data);
 
     }
-
-    $(document).touchwipe(function () {
+    $(document).on('swipeup', function () {
+        console.log("swipeup..");
         msg = {
             sendToAll: true,
             user: user
         };
     });
 
-    $(document).touchwipe({
-        wipeLeft: function () {
-            //alert("left");
-        },
-        wipeRight: function () {
-            //alert("right");
-        },
-        wipeUp: function () {
-            $(document).css('background', '#444444');
-        },
-        wipeDown: function () {
-            //alert("down");
-        },
-        min_move_x: 20,
-        min_move_y: 20,
-        // preventDefaultEvents: true,
-    });
+    // $(document).touchwipe({
+    //     wipeLeft: function () {
+    //         //alert("left");
+    //     },
+    //     wipeRight: function () {
+    //         //alert("right");
+    //     },
+    //     wipeUp: function () {
+    //         // $(document).css('background', '#444444');
+    //         console.log("water");
+    //     },
+    //     wipeDown: function () {
+    //         //alert("down");
+    //     },
+    //     min_move_x: 20,
+    //     min_move_y: 20,
+    //     preventDefaultEvents: true,
+    // });
 }
