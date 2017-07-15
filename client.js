@@ -54,7 +54,7 @@ window.onload = function () {
             //alert("right");
         },
         wipeUp: function () {
-            alert("water");
+            $(document).css('background', '#444444');
         },
         wipeDown: function () {
             //alert("down");

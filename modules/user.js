@@ -31,6 +31,6 @@ User.prototype.logoff = function (data) {
 // }
 
 // User.prototype.updateColor = function (data) {
-//     var selector = `#id-${data.user.id}`;
+//     // var selector = `#id-${data.user.id}`;
 //     $(selector).css('background', data.user.color);
 // }
