@@ -1,4 +1,14 @@
-.avatar {
-    width: 100px;
+.toDrag,
+.end {
+    border: solid 1px black;
     height: 100px;
+    width: 100px;
+}
+
+.end {
+    margin-top: 500px;
+}
+
+.selected {
+    background-color: #333;
 }

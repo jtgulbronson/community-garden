@@ -38,30 +38,12 @@ window.onload = function () {
         user[data.type](data);
 
     }
-    $(document).on('swipeup', function () {
-        alert("swipeup..");
-        msg = {
-            sendToAll: true,
-            user: user
-        };
-    });
 
-    // $(document).touchwipe({
-    //     wipeLeft: function () {
-    //         //alert("left");
-    //     },
-    //     wipeRight: function () {
-    //         //alert("right");
-    //     },
-    //     wipeUp: function () {
-    //         // $(document).css('background', '#444444');
-    //         console.log("water");
-    //     },
-    //     wipeDown: function () {
-    //         //alert("down");
-    //     },
-    //     min_move_x: 20,
-    //     min_move_y: 20,
-    //     preventDefaultEvents: true,
-    // });
+    var toDrag = document.querySelector('.toDrag');
+    var mc = new Hammer(toDrag);
+
+    // listen to events...
+    mc.on("swipe", function (ev) {
+        alert("swipe detected");
+    });
 }
