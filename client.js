@@ -7,6 +7,9 @@ window.onload = function () {
     var user = new User();
     $('.id').html(user.id);
 
+    //a frame look controls disable
+    var aScene = document.getElementById("scene");
+    aScene.removeAttribute('look-controls');
 
 
     ws.onopen = function () {
@@ -39,11 +42,12 @@ window.onload = function () {
 
     }
 
-    var toDrag = document.querySelector('.toDrag');
+    var toDrag = document.querySelector('#scene');
     var mc = new Hammer(toDrag);
 
     // listen to events...
     mc.on("swipe", function (ev) {
-        alert("swipe detected");
+        console.log("swipe detected");
+        document.getElementsByTagName("a-cylinder")[0].setAttribute("height", "3");
     });
 }

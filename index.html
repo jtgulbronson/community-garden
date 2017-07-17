@@ -5,14 +5,16 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css" />
+    <script src="https://aframe.io/releases/0.6.0/aframe.min.js"></script>
     <title></title>
 </head>
 
 <body>
-    <h1>Let See Who is Online!</h1>
-    <p>Your ID id: <span class="id"></span></p>
-    <div class="toDrag selected"></div>
-    <div class="end"></div>
+    <a-scene id="scene">
+        <a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
+        <a-plane position="0 0 -4" rotation="-90 0 0" width="12" height="12" color="#567d46"></a-plane>
+        <a-sky color="#f7f7f7"></a-sky>
+    </a-scene>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="hammer.js"></script>
     <script type="text/javascript" src="modules/user.js"></script>
