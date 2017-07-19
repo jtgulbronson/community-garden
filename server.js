@@ -38,6 +38,9 @@ wss.on('connection', function (ws) {
             console.log(msg.user);
         } else if (msg.type == 'loadAll') {
             msg.users = users;
+        } else if (msg.type == 'swipe') {
+            console.log("swipe sent");
+            // document.getElementsByTagName("a-cylinder")[0].setAttribute("height", "9");
         }
 
         if (msg.sendToAll) {

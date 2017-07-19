@@ -49,5 +49,11 @@ window.onload = function () {
     mc.on("swipe", function (ev) {
         console.log("swipe detected");
         document.getElementsByTagName("a-cylinder")[0].setAttribute("height", "9");
+        var msg = {
+            type: 'swipe',
+            sendToAll: true,
+            swipe: true
+        }
+        ws.send(JSON.stringify(msg));
     });
 }
