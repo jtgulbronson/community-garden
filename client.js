@@ -45,6 +45,10 @@ window.onload = function () {
     var toDrag = document.querySelector('#scene');
     var mc = new Hammer(toDrag);
 
+    mc.get('swipe').set({
+        direction: Hammer.DIRECTION_VERTICAL
+    });
+
     // listen to events...
     mc.on("swipe", function (ev) {
         console.log("swipe detected");
