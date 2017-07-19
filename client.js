@@ -38,7 +38,7 @@ window.onload = function () {
         var data = JSON.parse(e.data);
         console.log(data);
 
-        user[data.type](data);
+        // user[data.type](data);
 
     }
 
@@ -48,6 +48,6 @@ window.onload = function () {
     // listen to events...
     mc.on("swipe", function (ev) {
         console.log("swipe detected");
-        document.getElementsByTagName("a-cylinder")[0].setAttribute("height", "3");
+        document.getElementsByTagName("a-cylinder")[0].setAttribute("height", "9");
     });
 }
