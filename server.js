@@ -35,7 +35,7 @@ wss.on('connection', function (ws) {
         console.log(msg);
 
         if (msg.type == 'loadAll') {
-            var cylinderHeight = $('.cyl').attr('height');
+            //var cylinderHeight = $('.cyl').attr('height');
         } else if (msg.type == 'swipe') {
             //notifying all clients about swipe
             console.log("swipe sent");
