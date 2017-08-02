@@ -9,10 +9,11 @@
     <title>Community Garden</title>
 </head>
 
-<body>
-    <a-scene id="scene">
-        <a-cylinder frustum-lock position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
-        <a-plane frustum-lock position="0 0 -4" rotation="-90 0 0" width="12" height="12" color="#567d46"></a-plane>
+<body data-mobile-user="false">
+    <a-scene id="scene" bgcolor="">
+        <a-entity id="camera" camera="userHeight: 1.6" wasd-controls-enabled="false" look-controls-enabled="false" zoom="-1"></a-entity>
+        <a-cylinder class="cyl" frustum-lock position="0 0 -3" radius="0.125" height="0.5" color="#BACF78"></a-cylinder>
+        <a-plane frustum-lock position="0 0 -4" rotation="-90 0 0" width="30" height="30" color="#567d46"></a-plane>
         <a-sky color="#f7f7f7"></a-sky>
     </a-scene>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

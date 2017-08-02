@@ -2,19 +2,22 @@ window.onload = function () {
 
     var host = location.origin.replace(/^http/, 'ws');
     var ws = new WebSocket(host);
-    // var id;
 
     var user = new User();
+    var data;
     $('.id').html(user.id);
+    var msg = {};
 
-    //a frame look controls disable
-    var aScene = document.getElementById("scene");
-    aScene.removeAttribute('look-controls');
-
+    //assigning cylinder a frame height to a variable
+    var cylinderHeight;
+    var cylinderHeightInt;
 
     ws.onopen = function () {
-
         console.log(user);
+
+        //assigning cylinder a frame height to a variable
+        // var cylinderHeight = $('.cyl').attr('height');
+        // var cylinderHeightInt = parseInt(cylinderHeight);
 
         var msg = {
             type: 'loadAll',
@@ -30,34 +33,49 @@ window.onload = function () {
             user: user
         }
 
+
+
         ws.send(JSON.stringify(msg));
     }
 
     ws.onmessage = function (e) {
 
-        var data = JSON.parse(e.data);
+        data = JSON.parse(e.data);
         console.log(data);
 
-        // user[data.type](data);
+        if (data.type == "swipe") {
+            console.log('swipe updated');
+            var cylinderHeight = $('.cyl').attr('height');
+            var cylinderHeightInt = parseInt(cylinderHeight);
+            cylinderHeightInt += 1;
+            //assigning increased height to a frame cylinder height
+            $('.cyl').attr('height', cylinderHeightInt);
+        }
 
     }
 
-    var toDrag = document.querySelector('#scene');
-    var mc = new Hammer(toDrag);
+    //checking if user is on a mobile device
+    if (user.mobile) {
+        var toSwipe = document.body;
+        //setting up hammer to detect swipe
+        var mc = new Hammer(toSwipe);
+        //changing swipe direction to vertical
+        mc.get('swipe').set({
+            direction: Hammer.DIRECTION_VERTICAL
+        });
 
-    mc.get('swipe').set({
-        direction: Hammer.DIRECTION_VERTICAL
-    });
+        // listen to swipe event
+        mc.on("swipe", function (ev) {
+            console.log("swipe detected");
+            //changing type of msg to notify server
+            msg = {
+                type: 'swipe',
+                sendToAll: true,
+                swipe: true,
+            }
+            ws.send(JSON.stringify(msg));
 
-    // listen to events...
-    mc.on("swipe", function (ev) {
-        console.log("swipe detected");
-        document.getElementsByTagName("a-cylinder")[0].setAttribute("height", "9");
-        var msg = {
-            type: 'swipe',
-            sendToAll: true,
-            swipe: true
-        }
-        ws.send(JSON.stringify(msg));
-    });
+        });
+    }
+
 }

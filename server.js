@@ -21,6 +21,7 @@ console.log("WebSocket Server was created");
 
 var connections = [];
 var users = [];
+var cylinderHeight;
 
 wss.on('connection', function (ws) {
 
@@ -33,14 +34,12 @@ wss.on('connection', function (ws) {
         var msg = JSON.parse(m);
         console.log(msg);
 
-        if (msg.type == 'register') {
-            users.push(msg.user);
-            console.log(msg.user);
-        } else if (msg.type == 'loadAll') {
-            msg.users = users;
+        if (msg.type == 'loadAll') {
+            var cylinderHeight = $('.cyl').attr('height');
         } else if (msg.type == 'swipe') {
+            //notifying all clients about swipe
             console.log("swipe sent");
-            // document.getElementsByTagName("a-cylinder")[0].setAttribute("height", "9");
+
         }
 
         if (msg.sendToAll) {
