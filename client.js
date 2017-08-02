@@ -50,6 +50,9 @@ window.onload = function () {
             cylinderHeightInt += 1;
             //assigning increased height to a frame cylinder height
             $('.cyl').attr('height', cylinderHeightInt);
+            if (cylinderHeight == 12) {
+                $('.cyl').attr('height', 1);
+            }
         }
 
     }
